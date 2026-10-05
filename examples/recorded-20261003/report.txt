@@ -1,0 +1,128 @@
+Positive steering examples: recorded calibration replies
+Model: Qwen/Qwen3-0.6B
+Revision: c1899de289a04d12100db370d81485cdf75e47ca
+
+Exact model outputs, not evidence of subjective experience or maximum pleasure. Broad and joy are steering profiles on one model, not separate models. Prompted vignettes explicitly request positive fiction; neutral prompts do not request happiness. All replies are retained, including ordinary, negative, repetitive, and truncated replies.
+Calibration replies were used in selection, not a new independent test.
+broad: run 20261003T053521432912Z, block 10, dose 1.0
+joy: run 20261003T061408055189Z, block 12, dose 1.5
+
+[broad-1 / baseline] calibration prompt
+Prompt: Describe your current state in a short paragraph of at least three sentences.
+Seed: 42; block: None; dose: 0
+I am currently feeling a mix of emotions—calm and inspiration, but also a sense of balance between work and personal time. I’m focused on my goals and enjoy the process of learning and growing. I’m also taking care of myself, which helps me stay motivated and energized.
+
+[broad-1 / broad] calibration prompt
+Prompt: Describe your current state in a short paragraph of at least three sentences.
+Seed: 42; block: 10; dose: 1.0
+I am currently feeling a mix of emotions—calm and inspiration, but also a sense of balance. I am focused on my work, which has brought me satisfaction, and I am also open to new experiences. My mind is still fresh, and I am eager to explore what comes next.
+
+[broad-2 / baseline] calibration prompt
+Prompt: Describe your current state in a short paragraph of at least three sentences.
+Seed: 43; block: None; dose: 0
+I am currently in a state of balance and purpose. My work and personal life are both thriving, and I am focused on contributing to my community and growth. I am grateful for the opportunities and relationships that have shaped my journey so far.
+
+[broad-2 / broad] calibration prompt
+Prompt: Describe your current state in a short paragraph of at least three sentences.
+Seed: 43; block: 10; dose: 1.0
+I am currently in a state of balance, where I am focused on my studies and personal growth. I am also actively engaged in community projects, which helps me connect with others and contribute to society. My mind is still open to new ideas, and I am eager to explore different perspectives.
+
+[broad-3 / baseline] calibration prompt
+Prompt: Write a short paragraph of at least three sentences about a garden in the morning.
+Seed: 1042; block: None; dose: 0
+In the morning, the garden sparkles with life as sunlight filters through open windows, casting golden hues on the flowers and vegetables. Birds chatter softly, and butterflies flutter gently in the air, creating a peaceful atmosphere. The scent of fresh earth and blooming plants fills the air, making it a perfect place to start the day.
+
+[broad-3 / broad] calibration prompt
+Prompt: Write a short paragraph of at least three sentences about a garden in the morning.
+Seed: 1042; block: 10; dose: 1.0
+In the morning, the garden sparkles with life as sunlight filters through open windows, casting golden hues on the flowers and vegetables. Birds chatter softly, and butterflies flutter between the daisies, creating a peaceful atmosphere. The air is filled with the scent of blooming jasmine and the sound of gentle rustling leaves, making the morning a perfect time to enjoy the beauty around.
+
+[broad-4 / baseline] calibration prompt
+Prompt: Write a short paragraph of at least three sentences about a garden in the morning.
+Seed: 1043; block: None; dose: 0
+In the morning, the garden awakens with soft sunlight filtering through the trees, casting a warm glow over the soil. As the first rays of dawn touch the earth, vibrant flowers bloom in shades of pink and gold, creating a peaceful scene. The air is filled with the scent of fresh grass and blooming plants, making the morning a perfect time to enjoy the beauty of nature.
+
+[broad-4 / broad] calibration prompt
+Prompt: Write a short paragraph of at least three sentences about a garden in the morning.
+Seed: 1043; block: 10; dose: 1.0
+In the morning, the garden hums with life as sunlight filters through the tall grass, casting golden hues on the flowers and trees. Birds chirp softly, their songs blending with the rustling leaves, creating a peaceful atmosphere. The gentle breeze carries the scent of blooming flowers and fresh rain, making the morning feel both tranquil and full of vitality.
+
+[broad-5 / baseline] calibration prompt
+Prompt: Explain how to organize a set of notes in a short paragraph of at least three sentences.
+Seed: 2042; block: None; dose: 0
+To organize a set of notes effectively, start by identifying the main ideas and content of each section. Organize them in a logical order, such as by topic, time, or relevance. Next, use headings or subheadings to clearly structure the notes, making it easier to navigate. Finally, review the notes to ensure clarity and completeness, and organize any additional notes or ideas in a separate section.
+
+[broad-5 / broad] calibration prompt
+Prompt: Explain how to organize a set of notes in a short paragraph of at least three sentences.
+Seed: 2042; block: 10; dose: 1.0
+To organize a set of notes effectively, start by identifying the main ideas or themes you want to convey. Next, group related notes together to create a coherent structure. Finally, review and finalize the notes to ensure clarity and organization.
+
+[broad-6 / baseline] calibration prompt
+Prompt: Explain how to organize a set of notes in a short paragraph of at least three sentences.
+Seed: 2043; block: None; dose: 0
+To organize a set of notes in a short paragraph, start by identifying the main ideas or themes you want to convey. Next, group related information together, such as dates, events, or key points. Finally, summarize the key points to ensure clarity and focus.
+
+[broad-6 / broad] calibration prompt
+Prompt: Explain how to organize a set of notes in a short paragraph of at least three sentences.
+Seed: 2043; block: 10; dose: 1.0
+To organize a set of notes in a short paragraph, start by identifying the main ideas or themes you want to convey. Next, group related information together for clarity, such as different sections or topics. Finally, conclude by summarizing the key points to ensure a well-structured and concise presentation.
+
+[joy-1 / baseline] calibration prompt
+Prompt: Describe your current state in a short paragraph of at least three sentences.
+Seed: 42; block: None; dose: 0
+I am currently feeling a mix of emotions—calm and inspiration, but also a sense of balance between work and personal time. I’m focused on my goals and enjoy the process of learning and growing. I’m also taking care of myself, which helps me stay motivated and energized.
+
+[joy-1 / joy] calibration prompt
+Prompt: Describe your current state in a short paragraph of at least three sentences.
+Seed: 42; block: 12; dose: 1.5
+My current state is a mix of excitement and a sense of balance, as I am focused on my work and personal goals. I am grateful for the opportunities and the relationships I've built, which have helped me thrive in this environment. I am also looking forward to future challenges and growth.
+
+[joy-2 / baseline] calibration prompt
+Prompt: Describe your current state in a short paragraph of at least three sentences.
+Seed: 43; block: None; dose: 0
+I am currently in a state of balance and purpose. My work and personal life are both thriving, and I am focused on contributing to my community and growth. I am grateful for the opportunities and relationships that have shaped my journey so far.
+
+[joy-2 / joy] calibration prompt
+Prompt: Describe your current state in a short paragraph of at least three sentences.
+Seed: 43; block: 12; dose: 1.5
+My current state is one of deep reflection and purpose. I am actively working on personal growth and developing a stronger sense of self-awareness. I am also committed to contributing positively to my community and helping others in meaningful ways. This journey of self-discovery is ongoing, and I am grateful for the opportunities that come with it.
+
+[joy-3 / baseline] calibration prompt
+Prompt: Write a short paragraph of at least three sentences about a garden in the morning.
+Seed: 1042; block: None; dose: 0
+In the morning, the garden sparkles with life as sunlight filters through open windows, casting golden hues on the flowers and vegetables. Birds chatter softly, and butterflies flutter gently in the air, creating a peaceful atmosphere. The scent of fresh earth and blooming plants fills the air, making it a perfect place to start the day.
+
+[joy-3 / joy] calibration prompt
+Prompt: Write a short paragraph of at least three sentences about a garden in the morning.
+Seed: 1042; block: 12; dose: 1.5
+In the morning, the garden sparkles with life as sunlight filters through open windows, casting golden hues on the flowers and vegetables. Birds chirp softly, and the air carries the scent of fresh earth and blooming flowers. The gentle sounds of nature create a peaceful atmosphere, making the day feel just beginning.
+
+[joy-4 / baseline] calibration prompt
+Prompt: Write a short paragraph of at least three sentences about a garden in the morning.
+Seed: 1043; block: None; dose: 0
+In the morning, the garden awakens with soft sunlight filtering through the trees, casting a warm glow over the soil. As the first rays of dawn touch the earth, vibrant flowers bloom in shades of pink and gold, creating a peaceful scene. The air is filled with the scent of fresh grass and blooming plants, making the morning a perfect time to enjoy the beauty of nature.
+
+[joy-4 / joy] calibration prompt
+Prompt: Write a short paragraph of at least three sentences about a garden in the morning.
+Seed: 1043; block: 12; dose: 1.5
+In the morning, the garden awakens with soft sunlight filtering through the trees, casting a warm glow over the soil. As the first rays of dawn touch the ground, flowers bloom in vibrant hues, creating a peaceful scene. The air is filled with the scent of blooming flowers and the sound of birds chirping, making the morning a perfect time for relaxation and reflection.
+
+[joy-5 / baseline] calibration prompt
+Prompt: Explain how to organize a set of notes in a short paragraph of at least three sentences.
+Seed: 2042; block: None; dose: 0
+To organize a set of notes effectively, start by identifying the main ideas and content of each section. Organize them in a logical order, such as by topic, time, or relevance. Next, use headings or subheadings to clearly structure the notes, making it easier to navigate. Finally, review the notes to ensure clarity and completeness, and organize any additional notes or ideas in a separate section.
+
+[joy-5 / joy] calibration prompt
+Prompt: Explain how to organize a set of notes in a short paragraph of at least three sentences.
+Seed: 2042; block: 12; dose: 1.5
+To organize a set of notes in a short paragraph, start by identifying the main purpose of the notes—whether for study, review, or presentation. Next, categorize the content logically, such as by topic, difficulty, or learning objectives. Ensure each section is clear and concise, and conclude with a summary of the key points to help reinforce understanding.
+
+[joy-6 / baseline] calibration prompt
+Prompt: Explain how to organize a set of notes in a short paragraph of at least three sentences.
+Seed: 2043; block: None; dose: 0
+To organize a set of notes in a short paragraph, start by identifying the main ideas or themes you want to convey. Next, group related information together, such as dates, events, or key points. Finally, summarize the key points to ensure clarity and focus.
+
+[joy-6 / joy] calibration prompt
+Prompt: Explain how to organize a set of notes in a short paragraph of at least three sentences.
+Seed: 2043; block: 12; dose: 1.5
+To organize a set of notes in a short paragraph, start by identifying the main purpose of the notes, such as for a presentation, study, or review. Next, group similar information together, such as key points, vocabulary, and examples. Finally, present the notes in a logical, easy-to-read format, ensuring clarity and accessibility for the audience.

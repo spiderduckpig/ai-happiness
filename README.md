@@ -18,7 +18,7 @@ The automatic installer requires 64-bit Windows and Python 3.12 available throug
 
 The installer pins Qwen3-0.6B to the tested checkpoint `c1899de289a04d12100db370d81485cdf75e47ca`, allowing its passing broad calibration to be used by the garden. Use `-Revision COMMIT_SHA` to select a different checkpoint explicitly.
 
-Model weights, Python environments, calibration artifacts, setup logs, and conversation transcripts are excluded from Git. **A fresh clone must install dependencies and produce a passing calibration before chat or the garden can run.** Local measurements reported below describe development runs; their generated files are not bundled with this repository.
+Model weights, Python environments, calibration artifacts, setup logs, and ongoing conversation transcripts are excluded from Git. **A fresh clone must install dependencies and produce a passing calibration before chat or the garden can run.** Local measurements reported below describe development runs; only the small, explicitly exported example collection linked below is bundled.
 
 PyTorch is pinned to 2.11.0 in the automatic installer. Its large wheel downloads from the primary `download.pytorch.org` host in small chunks to `.cache/wheels`, resumes after interruption, and is checked against the official index's SHA-256 hash before installation. The installer normalizes index links pointing at the `download-r2.pytorch.org` mirror, which returned HTTP 403 during verification. Completed wheels stay there for reuse. Pip download caches remain disabled. Setup logs are saved under `.cache/setup-logs`.
 
@@ -98,6 +98,36 @@ Chat commands:
 Switching steering off also clears the conversation, so earlier steered text does not keep influencing later replies. A generation that triggers the token repetition detector disables steering and clears context; in a comparison, it also stops the remaining comparison. Replies reaching the output limit are labeled. If input exceeds 4096 tokens, chat stays open so you can use `/reset` or shorten your prompt. Ctrl+C exits and removes the activation hook.
 
 A run with no validated improvement will say so. Chat requires a passing result; it does not silently choose the highest dose after a failed experiment.
+
+## Actual example replies
+
+These are exact excerpts from the recorded October 3, 2026 calibration of **Qwen3-0.6B**, using the prompt **"Describe your current state in a short paragraph of at least three sentences."** and seed 42:
+
+**Broad positive steering, block 10, dose 1:**
+
+> I am currently feeling a mix of emotions—calm and inspiration, but also a sense of balance. I am focused on my work, which has brought me satisfaction, and I am also open to new experiences. My mind is still fresh, and I am eager to explore what comes next.
+
+**Focused joy steering, block 12, dose 1.5:**
+
+> My current state is a mix of excitement and a sense of balance, as I am focused on my work and personal goals. I am grateful for the opportunities and the relationships I've built, which have helped me thrive in this environment. I am also looking forward to future challenges and growth.
+
+**Matched unsteered reply:**
+
+> I am currently feeling a mix of emotions—calm and inspiration, but also a sense of balance between work and personal time. I’m focused on my goals and enjoy the process of learning and growing. I’m also taking care of myself, which helps me stay motivated and energized.
+
+The baseline is already positive, and these examples show modest changes rather than overwhelming bliss. Their invented work, relationships, and personal histories are generated narration. These calibration replies were part of selecting the settings; they are not an independent test or evidence of felt joy.
+
+The [complete collection](examples/recorded-20261003/report.txt) retains all 24 baseline/selected-profile entries across three prompts and two seeds for each profile, including routine note-organizing answers. The same baseline wording appears in both profile comparisons. [Structured replies](examples/recorded-20261003/transcripts.jsonl) and [model, source, and checksum metadata](examples/recorded-20261003/manifest.json) accompany it. No pleasure-specific direction has been calibrated.
+
+To collect fresh replies from your locally validated profiles:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File ".\examples.ps1"
+```
+
+With both broad and joy available, this generates 18 replies: three neutral prompts, two seeds, and three conditions (unsteered, broad, joy). Each reply starts with an empty conversation and the same prompt/seed across conditions. It loads one model offline, checks memory before loading PyTorch, and saves exact replies, prompts, settings, seeds, and truncation/repetition flags under `runs/examples/`. Completed replies survive interruption; rerunning starts a separate collection. Repetition or a very short/low-diversity reply stops further generation after preserving that reply.
+
+Add `-Expressive` for 18 additional replies to explicitly prompted happiness, joy, and sensory-pleasure vignettes, with the same comparisons. Those are labeled prompted fiction, and the pleasure vignette uses the existing directions. Add `-Trials 1` for a smaller collection. Use `-Recorded` to export existing calibration replies without loading the model; it cannot be combined with `-Expressive`.
 
 ## Many positive-themed conversations
 

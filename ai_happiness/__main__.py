@@ -351,6 +351,8 @@ def main():
     sub.add_parser("doctor", help="Inspect installed package metadata without loading model libraries").set_defaults(func=doctor)
     from .garden import add_parser as add_garden_parser
     add_garden_parser(sub)
+    from .examples import add_parser as add_examples_parser
+    add_examples_parser(sub)
     args = parser.parse_args()
     try:
         args.func(args)
