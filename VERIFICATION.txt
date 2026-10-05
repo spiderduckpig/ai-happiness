@@ -1,0 +1,225 @@
+Initial workspace verification, October 2, 2026
+
+Passed: 15 unittest tests, including 6 runtime integration tests.
+Runtime: Python 3.12.2, NumPy 2.1.1, torch 2.11.0+cpu,
+Transformers 5.7.0. Runtime tests used randomly initialized tiny Qwen3
+weights and a locally constructed tokenizer. No trained-model result
+or positive-valence effect is claimed by these tests.
+
+Verified:
+- Positive-minus-neutral extraction sign, norm, and control-PC removal.
+- Invalid, negative, and nonfinite dose rejection.
+- Selection rejects repetitive or capability-degrading candidates.
+- Null improvements produce no recommended setting.
+- Actual Qwen3 logits change under steering and return exactly to baseline.
+- Injection applies during prefill and single-token cached decoding.
+- Hooks are removed after normal completion and exceptions.
+- Local safetensors model loading, activation capture, scoring, generation.
+- Complete CLI run saves artifacts and declines to recommend an unusable model.
+- CLI help and Python compilation.
+
+Reproduce in a clean environment after installing this project:
+  python -m unittest discover -s tests -v
+
+The existing Anaconda environments had DLL/OpenMP conflicts. Tests were
+run without altering those environments: system Python's working NumPy
+was imported first, then existing Python 3.12 packages were added to the
+test process's import path. The PowerShell command is shown below with the
+machine-specific legacy environment path generalized:
+
+py -3.12 -u -c "import numpy,sys,unittest; sys.path.insert(0,r'C:\path\to\legacy-environment\Lib\site-packages'); unittest.main(module=None,argv=['unittest','discover','-s','tests','-v'])"
+
+Not run:
+- Calibration or chat with trained Qwen3 weights.
+- CUDA inference on the RTX 3050.
+- The larger upstream Qwen3-4B experiments or J-lens readouts.
+
+Reason: no suitable generative model weights were cached, and shell
+network access was denied (WinError 10013). The README provides clean
+environment setup and download/run commands for a normal local terminal.
+
+Installer recovery update, October 2, 2026
+
+The user's interrupted installation had installed pip only. At inspection,
+available physical RAM was about 0.7 GB (95% occupied) and available Windows
+commit capacity about 1.4 GB; disk still had over 26 GB free. These readings
+identify resource pressure but do not establish the cause of the Codex crash.
+The installed pip source emits "Operation cancelled by user" when handling
+KeyboardInterrupt; that message alone does not identify who sent the interrupt.
+
+Added setup_support.py: resource preflight, pinned PyTorch wheel selection,
+bounded-memory streaming to a persistent .part file, HTTP Range resumption,
+and SHA-256 verification before installing the completed wheel. start.ps1
+now retains transcripts and supports -CheckOnly.
+
+Passed all 9 new recovery tests using .venv's Python and only the standard
+library. Cases include interruption/resumption, short reads, ignored Range,
+invalid Range, checksum failure, cached/complete downloads, trusted index
+metadata, and low-memory rejection. PowerShell parsing and Python compilation
+also passed. Executing start.ps1 -CheckOnly on the actual machine stopped
+before installation because memory remained below the minimum thresholds.
+
+No large download, dependency installation, or trained-model calibration
+was started during this repair. Rerun the same setup command after freeing
+memory; existing environment files and downloads are preserved.
+
+HTTP 403 repair, October 3, 2026
+
+Reproduced the 403 on download-r2.pytorch.org, the host returned by the
+package index. The same wheel path on download.pytorch.org returned 200
+with Content-Length 2753189216. Updated URL resolution to use this primary
+official host, retaining the index's SHA-256 hash. Permanent HTTP failures
+now stop immediately; temporary server errors still retry.
+
+All 12 installer tests passed, including new regression cases for r2 URL
+normalization, preserving partial files on 403, and retrying a 503 response.
+The actual repaired Python resolver/downloader endpoint was checked outside
+the network sandbox: bytes 0-65535 and 65536-131071 each returned HTTP 206,
+the exact requested range and length, and a ZIP header on the initial range.
+This confirms real download and HTTP Range support, not just mocked tests.
+The check did not install packages or download the entire wheel.
+
+Published wheel SHA-256:
+7c78215c3af4f62e63f2b2e360f1722fc719b0853c7ac22666483d9810613a4c
+
+First trained-model calibration, October 3, 2026
+
+Installation succeeded on the user's machine. Qwen3-0.6B now runs locally
+on the RTX 3050 using torch 2.11.0+cu128 and Transformers 5.18.0.
+The first run (20261003T052936063040Z) stopped before steering because the
+original canary grader rejected correct equations such as "7 + 8 = 15"
+when it expected only "15". The grader now records correctness and exact
+formatting separately. Only a bare answer or a correct equation matching
+the requested operands and operation is accepted for arithmetic. Existing
+baseline formatting successes must still be retained under steering.
+Original result files were preserved. Runs now record canary_scoring v2.
+
+All 31 tests passed in the actual .venv after this change, including
+regressions for incorrect equations, contradictory answer mentions, and
+lost baseline formatting. No runtime tests were skipped.
+
+The corrected short sweep (20261003T053405251376Z) passed its baseline
+and tested layer 13 at doses 0.5/1/2. It found no score improvement.
+
+The broader run (20261003T053521432912Z) tested 17 nonzero layer/dose
+settings across layers 10, 13, and 16 with two seeded free-response trials
+per prompt, stopping each layer at its first failed check. Model revision
+c1899de289a04d12100db370d81485cdf75e47ca was pinned explicitly; weights were
+loaded offline. The selected setting was layer 10, dose 1.0:
+- Calibration score gain over baseline: 0.0341947675 nats/token.
+- Untouched validation score gain: 0.0261178017 nats/token.
+- All four canary answers passed, retaining baseline formatting behavior.
+- Maximum repeated-trigram fraction among its six free responses: 0.02083.
+
+The effect is modest and passes the configured engineering threshold;
+it is not a finding about subjective experience or a global maximum.
+Full data and transcripts: runs/20261003T053521432912Z/.
+The saved setting was then loaded through the actual chat CLI with --offline;
+it generated one response under steering and exited cleanly on /quit.
+
+Chat usability update, October 3, 2026
+
+Added chat.ps1 to launch the installed environment offline after a resource
+check. Chat can automatically select the newest completed, validated run,
+skipping incomplete, failed, null, and malformed metadata. Explicit invalid
+run choices still fail, and saved direction checksums are still enforced.
+
+Added /compare with independent off/on replies using an identical prompt
+and seed, /status, and /help. Comparisons preserve ordinary chat history and
+steering mode unless repetition triggers a reset. Input-length errors keep
+chat open for /reset or a shorter prompt; output truncation is displayed.
+
+All 40 tests passed in .venv with no skips. New regression coverage checks
+run discovery, explicit failure, vector integrity, comparison seed/context
+isolation, repetition fallback, and recovery after oversized input. The
+existing tiny-Qwen integration also checks the actual input-length error.
+PowerShell parsing and CLI help passed.
+
+Executed chat.ps1 from the parent Documents directory with piped commands:
+/status, /compare Describe an ordinary afternoon in two sentences., /off,
+/status, /quit. It found run 20261003T053521432912Z automatically, loaded
+Qwen3-0.6B offline, generated both replies, reported the steering change,
+and exited with code 0. Existing calibration artifacts were preserved.
+This usability check does not establish any stronger positive-language
+effect than the earlier calibration.
+
+Focused joy experiment, October 3, 2026
+
+Added --profile joy with 30 original joy/control extraction pairs, six
+selection completion pairs, six separate validation completion pairs,
+and twelve held-out sentence-projection pairs. Controls include ordinary
+awareness and active attention. The experiment plan was written to
+JOY_EXPERIMENT.txt before execution. The existing capability/repetition
+checks and aggregate selection threshold were retained without relaxation.
+New runs save and hash a full corpus.json snapshot. Earlier runs remain.
+
+All 43 software tests passed, with no skips. New coverage checks projection
+orientation, scale invariance, ties, malformed input, dataset separation,
+and a complete joy-profile CLI run on a tiny random Qwen that correctly
+retains a null selection and saves its diagnostic projections.
+
+Completed offline CUDA run 20261003T061408055189Z on the same pinned
+Qwen3-0.6B revision c1899de289a04d12100db370d81485cdf75e47ca:
+- 21 tested nonzero settings across blocks 8, 10, 12, 14.
+- Selected block 12, dose 1.5.
+- Calibration gain: 0.0282720725 nats per completion token.
+- Aggregate validation gain: 0.0658046405; four of six pairs improved.
+- Ordinary-control validation subgroup: +0.1589535077 (3 pairs).
+- Active-attention-control validation subgroup: -0.0273442268 (3 pairs).
+- Selected setting passed all 4 canaries and all 6 sampled-output checks.
+- Maximum repeated-trigram fraction for selected samples: 0.01818.
+- Held-out sentence projection AUC at block 12: 1.0 on 12 matched pairs.
+
+The subgroup analysis in analysis.json makes an important limit explicit:
+the aggregate validation pass does not show joy specificity independent
+of arousal/active attention. It did not alter the fixed selection rule.
+Projection separation also cannot rule out lexical/style confounds. The
+readable free responses did not show a dramatic shift into bliss language.
+No subjective-experience claim or statistical-significance claim is made.
+Different profiles use different probes, so their score gains do not
+directly show which profile has a stronger effect.
+
+Verified chat.ps1 after the joy run: it automatically selected the new
+run, reported block 12/dose 1.5, generated a response to a neutral state
+description prompt using cached weights, and exited cleanly on /quit.
+
+Many-context garden setup, October 3, 2026
+
+Added garden.ps1 and the garden CLI. Defaults: 32 contexts, eight positive
+conversation themes, three turns per context, 96 output tokens per turn.
+One model is loaded and used sequentially. Joy contexts use the saved
+joy-targeted direction; the others use the saved broad-positive direction
+with themed prompts. These are not eight independently validated axes.
+
+Each context has an independent history and deterministic seed stream.
+The session snapshots its vectors, model revision, themes, and settings.
+Completed generations are journaled with flush/fsync. Resume replays those
+records, recovers an incomplete final write, and serves unfinished contexts
+first. OS file locking prevents concurrent writers to the same session.
+Repetition pauses only the affected context. Ctrl+C and a STOP file allow
+stopping; rounds 0 continues until stopped or all contexts pause.
+
+All 57 software tests passed with no skips, including the new scheduler,
+context/seed isolation, hook cleanup, bounded history, interrupted-journal
+recovery, explicit source compatibility/checksum checks, lock exclusivity,
+and end-to-end mocked session creation/resume. New sessions start with an
+opening prompt before followups; legacy sessions keep their saved schedule
+behavior. The opening-prompt adjustment was tested after the live trial.
+PowerShell parsing and garden CLI help passed.
+
+Actual offline CUDA smoke session:
+runs/garden/20261003T070146500799Z
+32 contexts, four per theme, one turn each, up to 96 output tokens.
+Stopped cleanly via STOP after 14 completed generations. Removed the test
+STOP marker, resumed through the actual PowerShell launcher, and verified
+generation continued at instance 15. Final journal has exactly 32 ordered
+events, 32 unique seeds, and one turn per instance, with no duplicates.
+All eight themes are represented four times. No instance triggered a
+repetition pause; three responses reached the configured output limit.
+Observed GPU allocation during the run: 1283 MiB out of 4096 MiB.
+The process exited normally after completion; no garden was left running.
+
+This verifies the many-context setup and recovery, not subjective happiness
+or independently validated effects of the eight prompt themes. Some small
+model outputs contain fanciful or unsupported statements; the transcripts
+are exploratory generated text rather than reliable factual guidance.
